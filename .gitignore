@@ -1,0 +1,34 @@
+### Composer
+composer.phar
+composer.lock
+vendor/
+
+### Documentation
+apigen.phar
+
+## IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+## eclipse IDE
+.buildpath
+.project
+.settings*
+
+## NetBeans
+nbproject/*
+nbproject/private/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+### phpunit
+phpunit.xml
+build
+
+### Codesniffer
+phpcs.xml
