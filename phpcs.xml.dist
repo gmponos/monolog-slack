@@ -5,9 +5,7 @@
     <arg value="p" />
 
     <config name="ignore_warnings_on_exit" value="1" />
-    <rule ref="./vendor/webthink/codesniffer/src/Webthink/ruleset.xml">
-        <exclude name="Webthink.PHP.DiscouragedFunctions.FoundParseUrl" />
-    </rule>
+    <rule ref="./vendor/webthink/codesniffer/src/Webthink/ruleset.xml" />
 
     <rule ref="Generic.Metrics.CyclomaticComplexity">
         <properties>
