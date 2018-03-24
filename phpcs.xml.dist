@@ -11,8 +11,8 @@
 
     <rule ref="Generic.Metrics.CyclomaticComplexity">
         <properties>
-            <property name="complexity" value="5" />
-            <property name="absoluteComplexity" value="10" />
+            <property name="complexity" value="3" />
+            <property name="absoluteComplexity" value="5" />
         </properties>
     </rule>
     <rule ref="Webthink.PHP.SuperGlobals">
