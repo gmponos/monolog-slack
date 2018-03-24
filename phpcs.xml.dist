@@ -18,8 +18,4 @@
     <rule ref="Webthink.PHP.SuperGlobals">
         <exclude name="Webthink.PHP.SuperGlobals.SuperGlobalUsage" />
     </rule>
-    <rule ref="Webthink.PHP.NoSilencedErrors.Forbidden">
-        <exclude-pattern>*Handler/SlackWebhookHandler.php*</exclude-pattern>
-        <exclude-pattern>*Formatter/AbstractSlackAttachmentFormatter.php*</exclude-pattern>
-    </rule>
 </ruleset>
