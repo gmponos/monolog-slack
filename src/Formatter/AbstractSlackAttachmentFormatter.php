@@ -23,7 +23,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     /**
      * User icon e.g. 'ghost', 'http://example.com/user.png'
      *
-     * @var string
+     * @var string|null
      */
     private $emoji;
 
@@ -36,7 +36,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
 
     /**
      * @param string|null $username The username of the bot.
-     * @param string $emoji
+     * @param string|null $emoji
      * @param bool $includeContextAndExtra
      */
     public function __construct(string $username = null, string $emoji = null, bool $includeContextAndExtra = true)
@@ -51,7 +51,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      * @param array $record
      * @return array
      */
-    public function format(array $record)
+    public function format(array $record): array
     {
         $data = [];
 
@@ -111,7 +111,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function normalizeException($e)
+    protected function normalizeException($e): array
     {
         if (!$e instanceof Exception && !$e instanceof Throwable) {
             throw new \InvalidArgumentException(
@@ -173,7 +173,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
 
     /**
      * @param mixed $data
-     * @return mixed
+     * @return array|string|int|float
      */
     private function normalizeObject($data)
     {
@@ -201,10 +201,10 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     }
 
     /**
-     * @param mixed $data
+     * @param array|\Traversable $data
      * @return array
      */
-    private function normalizeArray($data)
+    private function normalizeArray($data): array
     {
         $normalized = [];
         $count = 1;
@@ -223,7 +223,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      * @param array $record
      * @return array
      */
-    private function createAttachmentFields(array $record)
+    private function createAttachmentFields(array $record): array
     {
         $fields = [];
         foreach (['context', 'extra'] as $key) {
@@ -243,7 +243,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
 
     /**
      * @param mixed $data
-     * @return string
+     * @return mixed
      */
     private function normalizeScalar($data)
     {

@@ -38,7 +38,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $client;
 
     /**
-     * @param string $webhook Slack API token
+     * @param string $webhook Slack Webhook string
      * @param string|null $username Name of a bot
      * @param string $useCustomEmoji If you should use custom emoji or not
      * @param int $level The minimum logging level at which this handler will be triggered

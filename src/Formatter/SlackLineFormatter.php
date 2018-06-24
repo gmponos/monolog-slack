@@ -40,7 +40,7 @@ class SlackLineFormatter extends LineFormatter implements SlackFormatterInterfac
      * @param array $record
      * @return array
      */
-    public function format(array $record)
+    public function format(array $record): array
     {
         $data['text'] = parent::format($record);
 
