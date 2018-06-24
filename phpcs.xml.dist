@@ -5,15 +5,14 @@
     <arg value="p" />
 
     <config name="ignore_warnings_on_exit" value="1" />
-    <rule ref="./vendor/webthink/codesniffer/src/Webthink/ruleset.xml" />
+    <rule ref="./vendor/webthink/codesniffer/src/Webthink/ruleset.xml">
+        <exclude name="Webthink.PHP.ObjectCalls.ArrayCall" />
+    </rule>
 
     <rule ref="Generic.Metrics.CyclomaticComplexity">
         <properties>
             <property name="complexity" value="3" />
             <property name="absoluteComplexity" value="5" />
         </properties>
-    </rule>
-    <rule ref="Webthink.PHP.SuperGlobals">
-        <exclude name="Webthink.PHP.SuperGlobals.SuperGlobalUsage" />
     </rule>
 </ruleset>
