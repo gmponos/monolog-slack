@@ -30,7 +30,7 @@ class SlackWebhookHandlerTest extends TestCase
     {
         parent::setUp();
         $this->client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
-        $this->handler = new SlackWebhookHandler('www.dummy.com', null, 'rotating_light', Logger::ERROR, true, true, $this->client);
+        $this->handler = new SlackWebhookHandler('www.dummy.com', null, 'rotating_light', Logger::ERROR, true, $this->client);
     }
 
     /**
