@@ -23,17 +23,17 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $webhook;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $username;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $useCustomEmoji;
 
     /**
-     * @var Client|null
+     * @var Client
      */
     private $client;
 

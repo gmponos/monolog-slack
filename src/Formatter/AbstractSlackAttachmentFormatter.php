@@ -87,7 +87,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      */
     protected function normalize($data)
     {
-        if (null === $data || is_scalar($data)) {
+        if ($data === null || is_scalar($data)) {
             return $this->normalizeScalar($data);
         }
 
