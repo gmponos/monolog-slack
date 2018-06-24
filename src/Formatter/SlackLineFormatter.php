@@ -16,13 +16,13 @@ class SlackLineFormatter extends LineFormatter implements SlackFormatterInterfac
     /**
      * User icon e.g. 'ghost', 'http://example.com/user.png'
      *
-     * @var string
+     * @var string|null
      */
     protected $emoji;
 
     /**
      * @param string|null $username
-     * @param string $emoji
+     * @param string|null $emoji
      */
     public function __construct(string $username = null, string $emoji = null)
     {

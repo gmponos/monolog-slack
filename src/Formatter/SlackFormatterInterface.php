@@ -2,6 +2,8 @@
 
 namespace Webthink\MonologSlack\Formatter;
 
-interface SlackFormatterInterface
+use Monolog\Formatter\FormatterInterface;
+
+interface SlackFormatterInterface extends FormatterInterface
 {
 }

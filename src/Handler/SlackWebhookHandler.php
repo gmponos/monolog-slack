@@ -33,11 +33,6 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $useCustomEmoji;
 
     /**
-     * @var bool
-     */
-    private $includeContextAndExtra;
-
-    /**
      * @var Client|null
      */
     private $client;
@@ -48,16 +43,14 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param bool $useCustomEmoji If you should use custom emoji or not
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param bool $includeContextAndExtra Whether the attachment should include context and extra data
      * @param Client|null $client
      */
     public function __construct(
-        $webhook,
-        $username = null,
-        $useCustomEmoji = true,
-        $level = Logger::ERROR,
-        $bubble = true,
-        $includeContextAndExtra = true,
+        string $webhook,
+        string $username = null,
+        bool $useCustomEmoji = true,
+        int $level = Logger::ERROR,
+        bool $bubble = true,
         Client $client = null
     ) {
         parent::__construct($level, $bubble);
@@ -65,7 +58,6 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         $this->webhook = $webhook;
         $this->username = $username;
         $this->useCustomEmoji = $useCustomEmoji;
-        $this->includeContextAndExtra = $includeContextAndExtra;
 
         if ($client === null) {
             $client = new Client([
@@ -93,7 +85,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param array $record
      * @return void
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         try {
             $this->client->request('post', $this->webhook, [
