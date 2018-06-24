@@ -108,7 +108,10 @@ class SlackLongAttachmentFormatterTest extends TestCase
 
         $attachment = $data['attachments'][0];
         $this->assertArrayHasKey('ts', $attachment);
-        $this->assertSame($record['datetime']->getTimestamp(), $attachment['ts']);
+        $this->assertInstanceOf(\DateTimeInterface::class, $record['datetime']);
+        /** @var \DateTimeInterface $dt */
+        $dt = $record['datetime'];
+        $this->assertSame($dt->getTimestamp(), $attachment['ts']);
     }
 
     public function testAddsOneAttachment()

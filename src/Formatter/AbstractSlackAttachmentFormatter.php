@@ -7,6 +7,10 @@ use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Logger;
 use Throwable;
 
+/**
+ * This class contains all the useful functions that you can use in order to create a Formatter to send
+ * logs to slack as attachments.
+ */
 abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter implements SlackFormatterInterface
 {
     /**
@@ -146,6 +150,19 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         ];
 
         return $logLevels[$level];
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    protected function truncateStringIfNeeded(string $string): string
+    {
+        if (strlen($string) > 1950) {
+            $string = substr($string, 0, 1900) . '... (truncated)';
+        }
+
+        return $string;
     }
 
     /**
