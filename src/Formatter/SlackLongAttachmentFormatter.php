@@ -2,6 +2,13 @@
 
 namespace Webthink\MonologSlack\Formatter;
 
+/**
+ * A Formatter that you can use in order to send to slack log message using the Attachment format.
+ *
+ * This Formatter will give the message a Long format.
+ *
+ * @author George Mponos <gmponos@gmail.com>
+ */
 class SlackLongAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
     /**
@@ -13,10 +20,8 @@ class SlackLongAttachmentFormatter extends AbstractSlackAttachmentFormatter
         $result = [];
         foreach ($record as $key => $value) {
             if (is_array($value)) {
-                $value = $this->toJson($value, true);
-                if (strlen($value) > 1950) {
-                    $value = substr($value, 0, 1900) . '... (truncated)';
-                }
+                $value = $this->truncateStringIfNeeded($this->toJson($value, true));
+
                 $value = sprintf('```%s```', $value);
                 $result[] = [
                     'title' => $key,
@@ -26,12 +31,9 @@ class SlackLongAttachmentFormatter extends AbstractSlackAttachmentFormatter
                 continue;
             }
 
-            if (strlen($value) > 1950) {
-                $value = substr($value, 0, 1900) . '... (truncated)';
-            }
             $result[] = [
                 'title' => $key,
-                'value' => $value,
+                'value' => $this->truncateStringIfNeeded($value),
                 'short' => false,
             ];
         }

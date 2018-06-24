@@ -4,6 +4,11 @@ namespace Webthink\MonologSlack\Formatter;
 
 use Monolog\Formatter\LineFormatter;
 
+/**
+ * A simple formatter that you can use in order to send to slack log message.
+ *
+ * @author George Mponos <gmponos@gmail.com>
+ */
 class SlackLineFormatter extends LineFormatter implements SlackFormatterInterface
 {
     /**
