@@ -8,9 +8,9 @@ class DummySlackAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
     /**
      * @param array $record
-     * @return mixed
+     * @return array
      */
-    protected function formatFields(array $record)
+    protected function formatFields(array $record): array
     {
         return [$record];
     }

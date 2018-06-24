@@ -28,7 +28,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $username;
 
     /**
-     * @var bool
+     * @var string
      */
     private $useCustomEmoji;
 
@@ -40,7 +40,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     /**
      * @param string $webhook Slack API token
      * @param string|null $username Name of a bot
-     * @param bool $useCustomEmoji If you should use custom emoji or not
+     * @param string $useCustomEmoji If you should use custom emoji or not
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
      * @param Client|null $client
@@ -48,7 +48,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     public function __construct(
         string $webhook,
         string $username = null,
-        bool $useCustomEmoji = true,
+        string $useCustomEmoji = null,
         int $level = Logger::ERROR,
         bool $bubble = true,
         Client $client = null
