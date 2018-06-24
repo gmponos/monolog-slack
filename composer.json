@@ -1,6 +1,6 @@
 {
     "name": "webthink/monolog-slack",
-    "homepage": "https://github.com/webthinkgr/monolog-slack",
+    "homepage": "https://github.com/gmponos/monolog-slack",
     "description": "This package contains handlers/processors for communicating monolog with slack.",
     "license": "MIT",
     "authors": [
