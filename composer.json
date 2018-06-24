@@ -2,13 +2,20 @@
     "name": "webthink/monolog-slack",
     "homepage": "https://github.com/webthinkgr/monolog-slack",
     "description": "This package contains handlers/processors for communicating monolog with slack.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "George Mponos",
+            "email": "gmponos@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.1",
         "monolog/monolog": "^1",
         "guzzlehttp/guzzle": "6.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^7.2",
         "webthink/codesniffer": "^2"
     },
     "autoload": {
