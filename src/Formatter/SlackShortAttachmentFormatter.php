@@ -11,7 +11,7 @@ class SlackShortAttachmentFormatter extends AbstractSlackAttachmentFormatter
     protected function formatFields(array $record): array
     {
         $value = $this->toJson($record, true);
-        if (strlen($value) > 1900) {
+        if (strlen($value) > 1950) {
             $value = substr($value, 0, 1900) . '... (truncated)';
         }
 
