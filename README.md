@@ -1,7 +1,5 @@
 # Monolog-Slack
 
-![license](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-2.png)
-
 ## Description
 
 This is a package that can help you send logs through monolog to slack using webhooks.
