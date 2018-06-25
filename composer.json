@@ -32,6 +32,6 @@
     "scripts": {
         "test": "php vendor/bin/phpunit --testsuite UnitTests",
         "phpcbf": "php vendor/bin/phpcbf src tests",
-        "phpcs": "php vendor/bin/phpcbf src tests"
+        "phpcs": "php vendor/bin/phpcs src tests"
     }
 }

@@ -13,6 +13,7 @@ interface ClientInterface
      * @param string $webhook
      * @param array $data
      * @throws TransferException
+     * @return void
      */
     public function send($webhook, array $data): void;
 }

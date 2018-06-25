@@ -186,8 +186,11 @@ class SlackShortAttachmentFormatterTest extends TestCase
      * @param bool $includeContextAndExtra
      * @return SlackShortAttachmentFormatter
      */
-    private function createFormatter($username = null, string $userIcon = null, $includeContextAndExtra = true)
-    {
+    private function createFormatter(
+        string $username = null,
+        string $userIcon = null,
+        bool $includeContextAndExtra = true
+    ) {
         return new SlackShortAttachmentFormatter($username, $userIcon, $includeContextAndExtra);
     }
 }

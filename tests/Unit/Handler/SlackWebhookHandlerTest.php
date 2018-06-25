@@ -4,6 +4,7 @@ namespace Webthink\MonologSlack\Test\Unit\Handler;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use Webthink\MonologSlack\Formatter\SlackShortAttachmentFormatter;
 use Webthink\MonologSlack\Handler\SlackWebhookHandler;
 use Webthink\MonologSlack\Test\Unit\TestCase;
@@ -13,7 +14,7 @@ use Webthink\MonologSlack\Utility\Exception\TransferException;
 class SlackWebhookHandlerTest extends TestCase
 {
     /**
-     * @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ClientInterface|MockObject
      */
     private $client;
 
