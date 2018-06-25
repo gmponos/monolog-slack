@@ -31,7 +31,7 @@ class GuzzleClient implements ClientInterface
      * @throws TransferException
      * @return void
      */
-    public function send($webhook, array $data): void
+    public function send(string $webhook, array $data): void
     {
         try {
             $this->client->request('post', $webhook, [
