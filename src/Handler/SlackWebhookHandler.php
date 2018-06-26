@@ -9,6 +9,8 @@ use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
+use Webthink\MonologSlack\Utility\ClientInterface;
+use Webthink\MonologSlack\Utility\GuzzleClient;
 
 /**
  * Sends notifications through Slack API
@@ -33,7 +35,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $useCustomEmoji;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $client;
 
@@ -43,7 +45,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param string $useCustomEmoji If you should use custom emoji or not
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param Client|null $client
+     * @param ClientInterface|null $client
      */
     public function __construct(
         string $webhook,
@@ -51,7 +53,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         string $useCustomEmoji = null,
         int $level = Logger::ERROR,
         bool $bubble = true,
-        Client $client = null
+        ClientInterface $client = null
     ) {
         parent::__construct($level, $bubble);
 
@@ -60,10 +62,12 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         $this->useCustomEmoji = $useCustomEmoji;
 
         if ($client === null) {
-            $client = new Client([
-                RequestOptions::TIMEOUT => 1,
-                RequestOptions::CONNECT_TIMEOUT => 1,
-            ]);
+            $client = new GuzzleClient(
+                new Client([
+                    RequestOptions::TIMEOUT => 1,
+                    RequestOptions::CONNECT_TIMEOUT => 1,
+                ])
+            );
         }
         $this->client = $client;
     }
@@ -84,16 +88,11 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      * @return void
+     * @throws \Webthink\MonologSlack\Utility\Exception\TransferException
      */
     protected function write(array $record): void
     {
-        try {
-            $this->client->request('post', $this->webhook, [
-                RequestOptions::JSON => $record['formatted'],
-            ]);
-        } finally {
-            return;
-        }
+        $this->client->send($this->webhook, $record['formatted']);
     }
 
     /**

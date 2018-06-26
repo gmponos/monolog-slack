@@ -2,6 +2,14 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [v0.3.0] - 2018-06-25
+
+### Added
+- Added custom clients that implement the interface `Webthink\MonologSlack\Utility\ClientInterface` in order to communicate
+with slack.
+- Change the constructor of `SlackWebhooHandler` to accept a `Webthink\MonologSlack\Utility\ClientInterface` instead of
+a guzzle client. If null is passed a `Webthink\MonologSlack\Utility\GuzzleClient` is initialized.
+
 ## [v0.2.0] - 2018-06-25
 
 ### Changed
