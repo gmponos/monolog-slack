@@ -20,3 +20,5 @@ script:
   - php vendor/bin/phpunit tests
   - php vendor/bin/phpcs src tests
 
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
