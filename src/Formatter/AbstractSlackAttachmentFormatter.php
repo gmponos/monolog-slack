@@ -83,9 +83,10 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
 
     /**
      * @param mixed $data
+     * @param int $depth
      * @return mixed
      */
-    protected function normalize($data)
+    protected function normalize($data, $depth = 0)
     {
         if ($data === null || is_scalar($data)) {
             return $this->normalizeScalar($data);

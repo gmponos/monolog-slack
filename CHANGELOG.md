@@ -6,6 +6,9 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 
 ### Changed
 - Added version PHP 7.3 to travis.
+- Require version 1.24 as minimum version of monolog. Unfortunately monolog introduced a BC on https://github.com/Seldaek/monolog/pull/808
+
+> BC Notice: If you are extending any of the Monolog's Formatters' normalize method, make sure you add the new $depth = 0 argument to your function signature to avoid strict PHP warnings. See #808 for more details.
 
 ## [v1.0.0] - 2018-11-12
 
