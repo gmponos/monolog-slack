@@ -2,6 +2,11 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [NEXT]
+
+### Changed
+- Added version PHP 7.3 to travis.
+
 ## [v1.0.0] - 2018-11-12
 
 This is the first stable release. No change has been made since 0.3.
