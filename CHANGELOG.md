@@ -2,6 +2,10 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [v1.0.0] - 2018-11-12
+
+This is the first stable release. No change has been made since 0.3.
+
 ## [v0.3.0] - 2018-06-25
 
 ### Added
