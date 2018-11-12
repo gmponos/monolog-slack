@@ -52,11 +52,12 @@ Note that the formatter passed inside the slack handler must be an instance of `
 
 If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
 
-### Initialize with custom Guzzle Client.
+### Initialize with a custom HTTP Client.
 
-Inside `SlackWebhookHandler` you can inject your custom Guzzle client.
+Inside `SlackWebhookHandler` you can inject your custom Custom HTTP client. The client that is injected must implement
+a `\Webthink\MonologSlack\Utility\ClientInterface`.
 
-`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $guzzle);`
+`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $clientg);`
 
 ## Change log
 
@@ -66,3 +67,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 1. Run `composer install` from bash.
 2. Run `composer tests` from bash.
+
+## Todo
+
+- Use a PSR-18 client instead of a custom one.
