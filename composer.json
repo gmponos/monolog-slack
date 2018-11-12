@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "monolog/monolog": "^1",
+        "monolog/monolog": "^1.24",
         "guzzlehttp/guzzle": "6.*"
     },
     "require-dev": {
