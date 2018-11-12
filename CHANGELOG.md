@@ -2,7 +2,7 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
-## [NEXT]
+## [v1.1.0] - 2018-11-12
 
 ### Changed
 - Added version PHP 7.3 to travis.
@@ -10,7 +10,7 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 
 > BC Notice: If you are extending any of the Monolog's Formatters' normalize method, make sure you add the new $depth = 0 argument to your function signature to avoid strict PHP warnings. See #808 for more details.
 
-## [v1.0.0] - 2018-11-12
+## [v1.0.0] - 2018-09-16
 
 This is the first stable release. No change has been made since 0.3.
 
