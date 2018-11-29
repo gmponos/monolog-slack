@@ -8,16 +8,18 @@
 ## Description
 
 This is a package that can help you send logs through monolog to slack using webhooks.
-Monolog already has a Slack handler but I am not in favor for these reasons:
+Monolog already has a handler for Slack but I am not in favor of it for these reasons:
 
 **It has some bugs**
 
-- Slack accepts until 2000 chars for [see](https://github.com/Seldaek/monolog/issues/909). Current package is not able to send more than 2000 characters but it is able to send until 2000 characters and be well formatted.
+- Slack accepts 2000 characters. For more details [see](https://github.com/Seldaek/monolog/issues/909). 
+Current package is not able to send more than 2000 characters but it is able to send until 2000 characters 
+and be well formatted.
 
 **Performance**
 
-- Monolog has the `WhatFailureGroupHandler` but I consider it simpler not to wrap my handler around another
- handler and have a simpler and faster logic [see](https://github.com/Seldaek/monolog/issues/920)
+- Monolog has the `WhatFailureGroupHandler` but I consider it simpler not to wrap my handler around another handler 
+and have a simpler and faster logic [see](https://github.com/Seldaek/monolog/issues/920)
 - SlackWebhookHandler does not have timeouts and it executes retries when slack service is down [see](https://github.com/Seldaek/monolog/pull/846#issuecomment-373522968)
 
 **Formatting**
@@ -42,6 +44,8 @@ You can initialize a `SlackWebhookHandler` simple with the following lines:
 
 `$handler = new SlackWebhookHandler('your_webhook_url');`
 
+## Formatters
+
 ### Inject custom formatter
 
 Now if you need to pass a custom slack formatter then you need to do the following:
@@ -51,8 +55,6 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 Note that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
 
 If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
-
-## Formatters
 
 ### SlackLineFormatter
 

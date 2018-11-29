@@ -42,7 +42,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     /**
      * @param string $webhook Slack Webhook string
      * @param string|null $username Name of a bot
-     * @param string $useCustomEmoji If you should use custom emoji or not
+     * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
      * @param ClientInterface|null $client
