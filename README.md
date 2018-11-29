@@ -56,7 +56,7 @@ If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFo
 
 ### SlackLineFormatter
 
-[](docs/slacklineformatter.png)
+![slacklineformatter](docs/slacklineformatter.PNG)
 
 ## HTTP Client.
 
