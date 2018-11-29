@@ -52,6 +52,14 @@ Note that the formatter passed inside the slack handler must be an instance of `
 
 If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
 
+## Formatters
+
+### SlackLineFormatter
+
+[](docs/slacklineformatter.png)
+
+## HTTP Client.
+
 ### Initialize with a custom HTTP Client.
 
 Inside `SlackWebhookHandler` you can inject your custom Custom HTTP client. The client that is injected must implement
