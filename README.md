@@ -12,20 +12,20 @@ Monolog already has a Slack handler but I am not in favor for these reasons:
 
 **It has some bugs**
 
-- Slack accepts until 2000 chars for [see](https://github.com/Seldaek/monolog/issues/909)
+- Slack accepts until 2000 chars for [see](https://github.com/Seldaek/monolog/issues/909). Current package is not able to send more than 2000 characters but it is able to send until 2000 characters and be well formatted.
 
 **Performance**
 
-- Although Monolog has the `WhatFailureGroupHandler` I would consider it simpler not to wrap my handler around another
+- Monolog has the `WhatFailureGroupHandler` but I consider it simpler not to wrap my handler around another
  handler and have a simpler and faster logic [see](https://github.com/Seldaek/monolog/issues/920)
 - SlackWebhookHandler does not have timeouts and it executes retries when slack service is down [see](https://github.com/Seldaek/monolog/pull/846#issuecomment-373522968)
 
 **Formatting**
 
-- Current package gives you the ability to add a custom formatter to the handler in order to format Attachments.
-Although you can pass a formatter to Slack Handlers of monolog the formatter is applied only to simple messages of slack
-and they are not executed for Attachments.
-- I like the formatting that I created better than the one that monolog has.
+- Current package gives you the ability to add a custom formatter to the `SlackwebhookHandler` in order to format Attachments.
+Monolog allows you to  pass a formatter to SlackHandlers but the formatter is applied only to simple messages of slack
+and they are not applied for Attachments.
+- I have created my custom formatters and I tend to like the formatting of Slack Records that I have created more than the one that monolog has.
  
 ## Install
 
@@ -58,6 +58,10 @@ If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFo
 
 ![slacklineformatter](docs/slacklineformatter.PNG)
 
+### SlackShortAttachmentFormatter
+
+![slackshortattachementformatter](docs/slackshortattachementformatter.PNG)
+
 ## HTTP Client.
 
 ### Initialize with a custom HTTP Client.
@@ -65,7 +69,9 @@ If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFo
 Inside `SlackWebhookHandler` you can inject your custom Custom HTTP client. The client that is injected must implement
 a `\Webthink\MonologSlack\Utility\ClientInterface`.
 
-`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $clientg);`
+`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
+
+**Note** that if no custom client is passed as argument `SlackwebhookHandler` initializes a `\Webthink\MonologSlack\Utility\GuzzleClient` by default.
 
 ## Change log
 
