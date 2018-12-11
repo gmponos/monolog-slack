@@ -55,7 +55,7 @@ final class SlackWebhookHandlerTest extends TestCase
                 }
 
                 $this->assertSame(':rotating_light:', $value['icon_emoji']);
-                $this->assertStringEndsWith("test.CRITICAL: test [] []\n", $value['text']);
+                $this->assertStringStartsWith('test.CRITICAL: test', $value['text']);
                 return true;
             }))
             ->willReturn(null);
@@ -70,7 +70,7 @@ final class SlackWebhookHandlerTest extends TestCase
         $this->client->expects($this->once())->method('send')
             ->with('www.dummy.com', $this->callback(function (array $value) {
                 $this->assertSame(':rotating_light:', $value['icon_emoji']);
-                $this->assertStringEndsWith("test.CRITICAL: test [] []\n", $value['text']);
+                $this->assertStringStartsWith('test.CRITICAL: test', $value['text']);
                 return true;
             }))
             ->willThrowException(new TransferException('Bad Request', 400));
