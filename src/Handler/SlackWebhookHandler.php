@@ -3,6 +3,7 @@
 namespace Webthink\MonologSlack\Handler;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
@@ -35,7 +36,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $useCustomEmoji;
 
     /**
-     * @var ClientInterface
+     * @var \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface
      */
     private $client;
 
@@ -45,7 +46,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param ClientInterface|null $client
+     * @param \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface|null $client
      */
     public function __construct(
         string $webhook,
@@ -89,9 +90,22 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param array $record
      * @return void
      * @throws \Webthink\MonologSlack\Utility\Exception\TransferException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     protected function write(array $record): void
     {
+        if ($this->client instanceof \Psr\Http\Client\ClientInterface) {
+            $body = json_encode($record['formatted']);
+            if ($body === false) {
+                throw new \InvalidArgumentException('Could not format record to json');
+            };
+
+            $this->client->sendRequest(
+                new Request('POST', $this->webhook, ['Content-Type' => ['application/json']], $body)
+            );
+            return;
+        }
+
         $this->client->send($this->webhook, $record['formatted']);
     }
 

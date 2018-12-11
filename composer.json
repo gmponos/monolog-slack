@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": "^7.1",
-        "monolog/monolog": "^1.24",
+        "ext-json": "*",
+        "monolog/monolog": "^1.24|^2.0",
         "guzzlehttp/guzzle": "6.*"
     },
     "require-dev": {
@@ -22,6 +23,9 @@
         "psr-4": {
             "Webthink\\MonologSlack\\": "src"
         }
+    },
+    "suggest": {
+        "psr/http-client": "Use a PSR-18 compliant client to send requests to slack."
     },
     "autoload-dev": {
         "psr-4": {
