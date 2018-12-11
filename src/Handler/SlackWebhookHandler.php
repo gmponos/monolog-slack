@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
@@ -75,7 +76,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         if (!$formatter instanceof SlackFormatterInterface) {
             throw new \InvalidArgumentException('Expected a slack formatter');
@@ -112,7 +113,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     /**
      * @return SlackLineFormatter
      */
-    protected function getDefaultFormatter()
+    protected function getDefaultFormatter(): FormatterInterface
     {
         return new SlackLineFormatter($this->username, $this->useCustomEmoji);
     }

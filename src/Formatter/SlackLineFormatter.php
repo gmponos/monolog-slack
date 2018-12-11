@@ -12,14 +12,14 @@ use Monolog\Formatter\LineFormatter;
 class SlackLineFormatter extends LineFormatter implements SlackFormatterInterface
 {
     /**
-     * Name of a bot
+     * Username to use as display for the webhook
      *
      * @var string|null
      */
     protected $username;
 
     /**
-     * User icon e.g. 'ghost', 'http://example.com/user.png'
+     * User icon e.g. 'ghost'
      *
      * @var string|null
      */
@@ -28,10 +28,12 @@ class SlackLineFormatter extends LineFormatter implements SlackFormatterInterfac
     /**
      * @param string|null $username
      * @param string|null $emoji
+     * @param string|null $format
      */
-    public function __construct(string $username = null, string $emoji = null)
+    public function __construct(string $username = null, string $emoji = null, string $format = null)
     {
-        parent::__construct();
+        $format = $format ?: '%channel%.%level_name%: %message% %context% %extra%';
+        parent::__construct($format, null, false, true);
         $this->username = $username;
         $this->emoji = $emoji;
     }

@@ -45,6 +45,6 @@ final class SlackLineFormatterTest extends TestCase
         $data = $formatter->format($this->getRecord(Logger::WARNING, 'Test message'));
 
         $this->assertArrayHasKey('text', $data);
-        $this->assertStringEndsWith('test.WARNING: Test message [] []' . "\n", $data['text']);
+        $this->assertStringStartsWith('test.WARNING: Test message', $data['text']);
     }
 }
