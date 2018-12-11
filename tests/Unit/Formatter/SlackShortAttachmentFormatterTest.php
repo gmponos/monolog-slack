@@ -6,7 +6,7 @@ use Monolog\Logger;
 use Webthink\MonologSlack\Formatter\SlackShortAttachmentFormatter;
 use Webthink\MonologSlack\Test\Unit\TestCase;
 
-class SlackShortAttachmentFormatterTest extends TestCase
+final class SlackShortAttachmentFormatterTest extends TestCase
 {
     /**
      * @var int

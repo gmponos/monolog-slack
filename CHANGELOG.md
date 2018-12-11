@@ -2,6 +2,15 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [v1.2.0] - 2018-12-11
+
+### Deprecated
+- Deprecated the custom clients that implement `Webthink\MonologSlack\Utility\ClientInterface`
+
+### Changes
+- Allow on the constructor to pass a PSR-18 HTTP client.
+- Use as default HTTP client an adapter of `php-http/guzzle6-adapter` as an HTTP Client instead of just guzzle.
+
 ## [v1.1.0] - 2018-11-12
 
 ### Changed

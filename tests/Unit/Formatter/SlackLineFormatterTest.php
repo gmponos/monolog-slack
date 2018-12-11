@@ -6,7 +6,7 @@ use Monolog\Logger;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
 use Webthink\MonologSlack\Test\Unit\TestCase;
 
-class SlackLineFormatterTest extends TestCase
+final class SlackLineFormatterTest extends TestCase
 {
     public function testNoUsernameByDefault()
     {

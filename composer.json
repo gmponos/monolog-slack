@@ -13,19 +13,16 @@
         "php": "^7.1",
         "ext-json": "*",
         "monolog/monolog": "^1.24|^2.0",
-        "guzzlehttp/guzzle": "6.*"
+        "php-http/guzzle6-adapter": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.2",
+        "phpunit/phpunit": "^7.4",
         "webthink/codesniffer": "^2"
     },
     "autoload": {
         "psr-4": {
             "Webthink\\MonologSlack\\": "src"
         }
-    },
-    "suggest": {
-        "psr/http-client": "Use a PSR-18 compliant client to send requests to slack."
     },
     "autoload-dev": {
         "psr-4": {

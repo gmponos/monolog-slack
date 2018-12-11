@@ -9,7 +9,7 @@ use Webthink\MonologSlack\Test\App\FooBar\TestJsonSerializableNorm;
 use Webthink\MonologSlack\Test\App\Formatter\DummySlackAttachmentFormatter;
 use Webthink\MonologSlack\Test\Unit\TestCase;
 
-class AbstractSlackAttachmentFormatterTest extends TestCase
+final class AbstractSlackAttachmentFormatterTest extends TestCase
 {
     public function testFormat()
     {
