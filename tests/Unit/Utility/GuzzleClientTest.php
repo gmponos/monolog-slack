@@ -10,7 +10,7 @@ use Webthink\MonologSlack\Test\Unit\TestCase;
 use Webthink\MonologSlack\Utility\Exception\TransferException;
 use Webthink\MonologSlack\Utility\GuzzleClient;
 
-class GuzzleClientTest extends TestCase
+final class GuzzleClientTest extends TestCase
 {
     /**
      * @var ClientInterface|MockObject

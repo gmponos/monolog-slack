@@ -11,7 +11,7 @@ use Webthink\MonologSlack\Test\Unit\TestCase;
 use Webthink\MonologSlack\Utility\ClientInterface;
 use Webthink\MonologSlack\Utility\Exception\TransferException;
 
-class SlackWebhookHandlerTest extends TestCase
+final class SlackWebhookHandlerTest extends TestCase
 {
     /**
      * @var ClientInterface|MockObject
@@ -64,7 +64,6 @@ class SlackWebhookHandlerTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Webthink\MonologSlack\Utility\Exception\TransferException
      */
     public function clientWillThrowExceptionButHandlerWillFailSilently()
     {
@@ -89,11 +88,11 @@ class SlackWebhookHandlerTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected a slack formatter
      */
     public function setFormatterWillThrowException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a slack formatter');
         $this->handler->setFormatter(new LineFormatter());
     }
 }

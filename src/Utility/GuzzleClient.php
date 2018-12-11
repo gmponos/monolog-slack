@@ -9,6 +9,8 @@ use Webthink\MonologSlack\Utility\Exception\TransferException;
 
 /**
  * This is a class that wraps a Guzzle Client in order to send records to slack.
+ *
+ * @deprecated Use a PSR-18 client instead.
  */
 class GuzzleClient implements ClientInterface
 {

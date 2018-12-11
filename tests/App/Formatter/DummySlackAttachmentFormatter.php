@@ -4,7 +4,7 @@ namespace Webthink\MonologSlack\Test\App\Formatter;
 
 use Webthink\MonologSlack\Formatter\AbstractSlackAttachmentFormatter;
 
-class DummySlackAttachmentFormatter extends AbstractSlackAttachmentFormatter
+final class DummySlackAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
     /**
      * @param array $record
