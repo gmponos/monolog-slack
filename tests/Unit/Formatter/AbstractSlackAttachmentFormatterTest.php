@@ -2,6 +2,7 @@
 
 namespace Webthink\MonologSlack\Test\Unit\Formatter;
 
+use Monolog\DateTimeImmutable;
 use Monolog\Logger;
 use Webthink\MonologSlack\Test\App\FooBar\TestBarNorm;
 use Webthink\MonologSlack\Test\App\FooBar\TestFooNorm;
@@ -14,7 +15,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
     public function testFormat()
     {
         $formatter = new DummySlackAttachmentFormatter();
-        $dateTime = new \DateTime();
+        $dateTime = new DateTimeImmutable(false);
         $formatted = $formatter->format([
             'level' => Logger::ERROR,
             'level_name' => 'ERROR',
@@ -58,7 +59,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
                             'baz' => [],
                             'res' => ['resource' => 'stream'],
                             'json' => ['Webthink\MonologSlack\Test\App\FooBar\TestJsonSerializableNorm' => ['foo' => 'bar']],
-                            'date_object' => $dateTime->format('Y-m-d H:i:s'),
+                            'date_object' => $dateTime->format('Y-m-d\TH:i:sP'),
                         ],
                     ],
                     'mrkdwn_in' => ['fields'],
