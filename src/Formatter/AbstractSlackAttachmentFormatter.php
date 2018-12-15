@@ -106,6 +106,11 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         return $data;
     }
 
+    /**
+     * @param Throwable $e
+     * @param int $depth
+     * @return array
+     */
     protected function normalizeException(Throwable $e, int $depth = 0): array
     {
         return [
@@ -159,7 +164,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     abstract protected function formatFields(array $record): array;
 
     /**
-     * @param mixed $data
+     * @param $data
      * @return array|string|int|float
      */
     private function normalizeObject($data)

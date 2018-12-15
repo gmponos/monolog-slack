@@ -3,13 +3,14 @@
 namespace Webthink\MonologSlack\Formatter;
 
 use Monolog\Formatter\LineFormatter;
+use Monolog\Formatter\NormalizerFormatter;
 
 /**
  * A simple formatter that you can use in order to send to slack log message.
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackLineFormatter extends LineFormatter implements SlackFormatterInterface
+class SlackLineFormatter extends NormalizerFormatter implements SlackFormatterInterface
 {
     /**
      * Username to use as display for the webhook
@@ -26,14 +27,20 @@ class SlackLineFormatter extends LineFormatter implements SlackFormatterInterfac
     protected $emoji;
 
     /**
+     * @var LineFormatter
+     */
+    private $lineFormatter;
+
+    /**
      * @param string|null $username
      * @param string|null $emoji
      * @param string|null $format
      */
     public function __construct(string $username = null, string $emoji = null, string $format = null)
     {
+        parent::__construct();
         $format = $format ?: '%channel%.%level_name%: %message% %context% %extra%';
-        parent::__construct($format, null, false, true);
+        $this->lineFormatter = new LineFormatter($format, null, false, true);
         $this->username = $username;
         $this->emoji = $emoji;
     }
@@ -44,7 +51,7 @@ class SlackLineFormatter extends LineFormatter implements SlackFormatterInterfac
      */
     public function format(array $record): array
     {
-        $data['text'] = parent::format($record);
+        $data['text'] = $this->lineFormatter->format($record);
 
         if ($this->username !== null) {
             $data['username'] = $this->username;

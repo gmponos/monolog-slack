@@ -3,11 +3,12 @@
 namespace Webthink\MonologSlack\Handler;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
 
@@ -18,6 +19,11 @@ use Webthink\MonologSlack\Formatter\SlackLineFormatter;
  */
 class SlackWebhookHandler extends AbstractProcessingHandler
 {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
     /**
      * @var string
      */
@@ -34,41 +40,35 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $useCustomEmoji;
 
     /**
-     * @var \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface
+     * @var RequestFactoryInterface
      */
-    private $client;
+    private $requestFactory;
 
     /**
+     * @param ClientInterface $client
+     * @param RequestFactoryInterface $requestFactory
      * @param string $webhook Slack Webhook string
      * @param string|null $username Name of a bot
      * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
-     * @param int $level The minimum logging level at which this handler will be triggered
+     * @param string|int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface|null $client
      */
     public function __construct(
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
         string $webhook,
         string $username = null,
         string $useCustomEmoji = null,
-        int $level = Logger::ERROR,
-        bool $bubble = true,
-        $client = null
+        $level = Logger::ERROR,
+        bool $bubble = true
     ) {
         parent::__construct($level, $bubble);
 
+        $this->client = $client;
+        $this->requestFactory = $requestFactory;
         $this->webhook = $webhook;
         $this->username = $username;
         $this->useCustomEmoji = $useCustomEmoji;
-
-        if ($client === null) {
-            $client = \Http\Adapter\Guzzle6\Client::createWithConfig([
-                RequestOptions::TIMEOUT => 1,
-                RequestOptions::CONNECT_TIMEOUT => 1,
-                RequestOptions::HTTP_ERRORS => false,
-            ]);
-        }
-
-        $this->client = $client;
     }
 
     /**
@@ -91,23 +91,17 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
-        try {
-            if ($this->client instanceof \Psr\Http\Client\ClientInterface) {
-                $body = json_encode($record['formatted']);
-                if ($body === false) {
-                    throw new \InvalidArgumentException('Could not format record to json');
-                };
+        $body = json_encode($record['formatted']);
+        if ($body === false) {
+            throw new \InvalidArgumentException('Could not format record to json');
+        };
 
-                $this->client->sendRequest(
-                    new Request('POST', $this->webhook, ['Content-Type' => ['application/json']], $body)
-                );
-                return;
-            }
+        $request = $this->requestFactory->createRequest('POST', $this->webhook);
+        $request = $request->withHeader('Content-Type', ['application/json']);
+        $request->getBody()->write($body);
+        $request->getBody()->rewind();
 
-            $this->client->send($this->webhook, $record['formatted']);
-        } finally {
-            return;
-        }
+        $this->client->sendRequest($request);
     }
 
     /**

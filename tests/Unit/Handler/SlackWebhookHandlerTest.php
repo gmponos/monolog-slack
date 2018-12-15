@@ -2,14 +2,17 @@
 
 namespace Webthink\MonologSlack\Test\Unit\Handler;
 
+use GuzzleHttp\Psr7\Request;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\NetworkExceptionInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
 use Webthink\MonologSlack\Formatter\SlackShortAttachmentFormatter;
 use Webthink\MonologSlack\Handler\SlackWebhookHandler;
 use Webthink\MonologSlack\Test\Unit\TestCase;
-use Webthink\MonologSlack\Utility\ClientInterface;
-use Webthink\MonologSlack\Utility\Exception\TransferException;
 
 final class SlackWebhookHandlerTest extends TestCase
 {
@@ -24,13 +27,27 @@ final class SlackWebhookHandlerTest extends TestCase
     private $handler;
 
     /**
+     * @var RequestFactoryInterface
+     */
+    private $requestFactory;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
     {
         parent::setUp();
         $this->client = $this->getMockBuilder(ClientInterface::class)->getMock();
-        $this->handler = new SlackWebhookHandler('www.dummy.com', null, 'rotating_light', Logger::ERROR, true, $this->client);
+        $this->requestFactory = $this->getMockBuilder(RequestFactoryInterface::class)->getMock();
+        $this->handler = new SlackWebhookHandler(
+            $this->client,
+            $this->requestFactory,
+            'www.dummy.com',
+            null,
+            'rotating_light',
+            Logger::ERROR,
+            true
+        );
     }
 
     /**
@@ -48,32 +65,43 @@ final class SlackWebhookHandlerTest extends TestCase
      */
     public function handlerWillHandleTheRecord()
     {
-        $this->client->expects($this->once())->method('send')
-            ->with('www.dummy.com', $this->callback(function ($value) {
-                if (!is_array($value)) {
-                    return false;
-                }
+        $this->requestFactory->expects($this->once())
+            ->method('createRequest')
+            ->with('POST', 'www.dummy.com')
+            ->willReturn(new Request('POST', 'www.dummy.com'));
 
-                $this->assertSame(':rotating_light:', $value['icon_emoji']);
-                $this->assertStringStartsWith('test.CRITICAL: test', $value['text']);
+        $this->client->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->callback(function (RequestInterface $value) {
+                $body = $value->getBody()->getContents();
+                $this->assertStringContainsString(':rotating_light:', $body);
+                $this->assertStringContainsString('test.CRITICAL: test', $body);
                 return true;
-            }))
-            ->willReturn(null);
+            }));
         $this->handler->handle($this->getRecord(Logger::CRITICAL));
     }
 
     /**
      * @test
      */
-    public function clientWillThrowExceptionButHandlerWillFailSilently()
+    public function clientWillThrowException()
     {
-        $this->client->expects($this->once())->method('send')
-            ->with('www.dummy.com', $this->callback(function (array $value) {
-                $this->assertSame(':rotating_light:', $value['icon_emoji']);
-                $this->assertStringStartsWith('test.CRITICAL: test', $value['text']);
+        $this->requestFactory->expects($this->once())
+            ->method('createRequest')
+            ->with('POST', 'www.dummy.com')
+            ->willReturn(new Request('POST', 'www.dummy.com'));
+
+        $this->client->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->callback(function (RequestInterface $value) {
+                $body = $value->getBody()->getContents();
+                $this->assertStringContainsString(':rotating_light:', $body);
+                $this->assertStringContainsString('test.CRITICAL: test', $body);
                 return true;
             }))
-            ->willThrowException(new TransferException('Bad Request', 400));
+            ->willThrowException(new \Exception());
+
+        $this->expectException(\Exception::class);
         $this->handler->handle($this->getRecord(Logger::CRITICAL));
     }
 
@@ -82,7 +110,7 @@ final class SlackWebhookHandlerTest extends TestCase
      */
     public function handlerDoesNotHandleTheRecord()
     {
-        $this->client->expects($this->never())->method('send');
+        $this->client->expects($this->never())->method('sendRequest');
         $this->handler->handle($this->getRecord());
     }
 
