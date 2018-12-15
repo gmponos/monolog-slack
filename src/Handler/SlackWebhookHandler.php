@@ -2,7 +2,6 @@
 
 namespace Webthink\MonologSlack\Handler;
 
-use GuzzleHttp\Psr7\Request;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Handler\HandlerInterface;
