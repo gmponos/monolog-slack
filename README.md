@@ -16,11 +16,14 @@ Monolog already has a handler for Slack but I am not in favor of it for these re
 Current package is not able to send more than 2000 characters but it is able to send until 2000 characters 
 and be well formatted.
 
+**Flexibility**
+
+- The Handler on this package allows you to pass your own PSR-18 client that can be configured in your own way.
+
 **Performance**
 
-- Monolog has the `WhatFailureGroupHandler` but I consider it simpler not to wrap my handler around another handler 
-and have a simpler and faster logic [see](https://github.com/Seldaek/monolog/issues/920)
 - SlackWebhookHandler does not have timeouts and it executes retries when slack service is down [see](https://github.com/Seldaek/monolog/pull/846#issuecomment-373522968)
+Because you are allowed to pass your own PSR-18 client you can have it configured in your own way.
 
 **Formatting**
 
@@ -42,19 +45,23 @@ $ composer require webthink/monolog-slack
 ### Simple initialization
 You can initialize a `SlackWebhookHandler` simple with the following lines:
 
-`$handler = new SlackWebhookHandler('your_webhook_url');`
+```php
+$client = new PSR18Client(); // PSR18Client does not exist. Use your own implementation.
+$requestFactory = new PSR17RequestFactory // PSR18Client does not exist. Use your own implementation.
+$handler = new SlackWebhookHandler($client, $requestFactory, 'your_webhook_url');`
+```
 
 ## Formatters
 
 ### Inject custom formatter
 
-Now if you need to pass a custom slack formatter then you need to do the following:
+Now if you need to pass a custom slack formatter then you can to do the following:
 
 `$hanlder->setFormatter($yourFormatter);`
 
 Note that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
 
-If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFormatter` by default.
 
 ### SlackLineFormatter
 
@@ -64,17 +71,6 @@ If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFo
 
 ![slackshortattachementformatter](docs/slackshortattachementformatter.PNG)
 
-## HTTP Client.
-
-### Initialize with a custom HTTP Client.
-
-Inside `SlackWebhookHandler` you can inject your custom Custom HTTP client. The client that is injected must implement
-a `\Webthink\MonologSlack\Utility\ClientInterface`.
-
-`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
-
-**Note** that if no custom client is passed as argument `SlackwebhookHandler` initializes a `\Webthink\MonologSlack\Utility\GuzzleClient` by default.
-
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -83,7 +79,3 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 1. Run `composer install` from bash.
 2. Run `composer tests` from bash.
-
-## Todo
-
-- Use a PSR-18 client instead of a custom one.
