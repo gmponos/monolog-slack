@@ -24,6 +24,7 @@ class GuzzleClient implements ClientInterface
      */
     public function __construct(GuzzleClientInterface $client)
     {
+        @trigger_error('Using the custom client implementation is deprecated. Use a PSR-18 client instead', E_USER_DEPRECATED);
         $this->client = $client;
     }
 
