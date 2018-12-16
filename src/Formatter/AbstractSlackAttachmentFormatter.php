@@ -164,7 +164,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     abstract protected function formatFields(array $record): array;
 
     /**
-     * @param $data
+     * @param mixed $data
      * @return array|string|int|float
      */
     private function normalizeObject($data)
