@@ -52,9 +52,9 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 
 `$hanlder->setFormatter($yourFormatter);`
 
-**Note-1:** that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-**Note-2:** if you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
-**Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
+- **Note-1:** that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
+- **Note-2:** if you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+- **Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
 
 ### SlackLineFormatter
 
@@ -78,9 +78,9 @@ Inside `SlackWebhookHandler` you can inject your [PSR-18](https://www.php-fig.or
 $handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
 ```
 
-**Note** that if no custom client is passed as argument `SlackwebhookHandler` initializes a `\Webthink\MonologSlack\Utility\GuzzleClient` by default.
+**Note** that if no PSR-18 HTTP client is passed as argument then `SlackwebhookHandler` initializes a `\Http\Adapter\Guzzle6\Client` by default.
 
-## Change log
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
