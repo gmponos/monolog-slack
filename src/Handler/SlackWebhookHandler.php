@@ -39,8 +39,8 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     private $client;
 
     /**
-     * @param string $webhook Slack Webhook string
-     * @param string|null $username Name of a bot
+     * @param string $webhook The slack webhook URL
+     * @param string|null $username Display name that will be used on the slack message
      * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
      * @param int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
@@ -79,7 +79,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         if (!$formatter instanceof SlackFormatterInterface) {
-            throw new \InvalidArgumentException('Expected a slack formatter');
+            throw new \InvalidArgumentException(sprintf('Expected an instance of %s', SlackFormatterInterface::class));
         }
 
         return parent::setFormatter($formatter);

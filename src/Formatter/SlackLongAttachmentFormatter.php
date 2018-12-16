@@ -5,7 +5,7 @@ namespace Webthink\MonologSlack\Formatter;
 /**
  * A Formatter that you can use in order to send to slack log message using the Attachment format.
  *
- * This Formatter will give the message a Long format.
+ * This Formatter will give the message of slack a Long format meaning that each key of the log context will be separate.
  *
  * @author George Mponos <gmponos@gmail.com>
  */
