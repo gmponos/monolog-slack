@@ -8,6 +8,7 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 - Deprecated the custom clients that implement `Webthink\MonologSlack\Utility\ClientInterface`. Use a PSR-18 instead.
 
 ### Changes
+- Allow the constructor of `SlackWebhookHandler` to pass as level `string|int`. Before it was only `int`.
 - Allow the constructor of `SlackWebhookHandler` to pass a PSR-18 HTTP client.
 - Use as default HTTP client an adapter of `php-http/guzzle6-adapter` instead of guzzle client.
 - Added in `SlackLineFormatter` a third parameter to allow passing a custom format of the text.
