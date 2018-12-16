@@ -70,7 +70,7 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 
 ## HTTP Client.
 
-### Initialize with a custom HTTP Client.
+### Initialize with a PSR-18 HTTP Client.
 
 Inside `SlackWebhookHandler` you can inject your [PSR-18](https://www.php-fig.org/psr/psr-18) HTTP client.
 
@@ -78,7 +78,8 @@ Inside `SlackWebhookHandler` you can inject your [PSR-18](https://www.php-fig.or
 $handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
 ```
 
-**Note** that if no PSR-18 HTTP client is passed as argument then `SlackwebhookHandler` initializes a `\Http\Adapter\Guzzle6\Client` by default.
+If no PSR-18 HTTP client is passed as argument then `SlackwebhookHandler` initializes a `\Http\Adapter\Guzzle6\Client` by default.
+The initialized client has Timeout and Connection-Timeout to 1 second.
 
 ## Changelog
 
