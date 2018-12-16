@@ -52,8 +52,8 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 
 `$hanlder->setFormatter($yourFormatter);`
 
-- **Note-1:** that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-- **Note-2:** if you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+- **Note-1:** The formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
+- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
 - **Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
 
 ### SlackLineFormatter
