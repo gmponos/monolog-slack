@@ -78,11 +78,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         }
 
         if ($client instanceof ClientInterface) {
-            $message = sprintf(
-                'Custom %s is deprecated and will be remove on 2.x version. Use a PSR-18 HTTP Client.',
-                ClientInterface::class
-            );
-            @trigger_error($message, E_USER_DEPRECATED);
+            @trigger_error('Using the custom HTTP Client implementation is deprecated and will be removed on 2.x. Use a PSR-18 HTTP Client instead.', E_USER_DEPRECATED);
         }
 
         $this->client = $client;
