@@ -5,6 +5,7 @@ namespace Webthink\MonologSlack\Test\Unit\Handler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
+use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackShortAttachmentFormatter;
 use Webthink\MonologSlack\Handler\SlackWebhookHandler;
 use Webthink\MonologSlack\Test\Unit\TestCase;
@@ -65,7 +66,7 @@ final class SlackWebhookHandlerTest extends TestCase
     /**
      * @test
      */
-    public function clientWillThrowExceptionButHandlerWillFailSilently()
+    public function clientWillThrowException()
     {
         $this->client->expects($this->once())->method('send')
             ->with('www.dummy.com', $this->callback(function (array $value) {
@@ -74,6 +75,8 @@ final class SlackWebhookHandlerTest extends TestCase
                 return true;
             }))
             ->willThrowException(new TransferException('Bad Request', 400));
+
+        $this->expectException(\Exception::class);
         $this->handler->handle($this->getRecord(Logger::CRITICAL));
     }
 
@@ -92,7 +95,7 @@ final class SlackWebhookHandlerTest extends TestCase
     public function setFormatterWillThrowException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected a slack formatter');
+        $this->expectExceptionMessage(sprintf('Expected an instance of %s', SlackFormatterInterface::class));
         $this->handler->setFormatter(new LineFormatter());
     }
 }
