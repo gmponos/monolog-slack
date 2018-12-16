@@ -7,8 +7,8 @@
 
 ## Description
 
-This is a package that can help you send logs through monolog to slack using webhooks.
-Monolog already has a handler for Slack but I am not in favor of it for these reasons:
+This is a package that can help you send logs through monolog to Slack using webhooks.
+Monolog already has a handler for Slack using Webhooks but I am not in favor of it for these reasons:
 
 **It has some bugs**
 
@@ -52,9 +52,9 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 
 `$hanlder->setFormatter($yourFormatter);`
 
-Note that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-
-If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+**Note-1:** that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
+**Note-2:** if you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+**Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
 
 ### SlackLineFormatter
 
@@ -64,14 +64,19 @@ If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFo
 
 ![slackshortattachementformatter](docs/slackshortattachementformatter.PNG)
 
+### SlackLongAttachmentFormatter
+
+![slacklongattachementformatter](docs/slacklongattachementformatter.PNG)
+
 ## HTTP Client.
 
 ### Initialize with a custom HTTP Client.
 
-Inside `SlackWebhookHandler` you can inject your custom Custom HTTP client. The client that is injected must implement
-a `\Webthink\MonologSlack\Utility\ClientInterface`.
+Inside `SlackWebhookHandler` you can inject your [PSR-18](https://www.php-fig.org/psr/psr-18) HTTP client.
 
-`$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
+```php
+$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
+```
 
 **Note** that if no custom client is passed as argument `SlackwebhookHandler` initializes a `\Webthink\MonologSlack\Utility\GuzzleClient` by default.
 
@@ -83,7 +88,3 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 1. Run `composer install` from bash.
 2. Run `composer tests` from bash.
-
-## Todo
-
-- Use a PSR-18 client instead of a custom one.
