@@ -91,23 +91,19 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
-        try {
-            if ($this->client instanceof \Psr\Http\Client\ClientInterface) {
-                $body = json_encode($record['formatted']);
-                if ($body === false) {
-                    throw new \InvalidArgumentException('Could not format record to json');
-                };
+        if ($this->client instanceof \Psr\Http\Client\ClientInterface) {
+            $body = json_encode($record['formatted']);
+            if ($body === false) {
+                throw new \InvalidArgumentException('Could not format record to json');
+            };
 
-                $this->client->sendRequest(
-                    new Request('POST', $this->webhook, ['Content-Type' => ['application/json']], $body)
-                );
-                return;
-            }
-
-            $this->client->send($this->webhook, $record['formatted']);
-        } finally {
+            $this->client->sendRequest(
+                new Request('POST', $this->webhook, ['Content-Type' => ['application/json']], $body)
+            );
             return;
         }
+
+        $this->client->send($this->webhook, $record['formatted']);
     }
 
     /**
