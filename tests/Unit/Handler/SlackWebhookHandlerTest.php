@@ -4,6 +4,7 @@ namespace Webthink\MonologSlack\Test\Unit\Handler;
 
 use GuzzleHttp\Psr7\Request;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\WhatFailureGroupHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Client\ClientInterface;
@@ -103,6 +104,30 @@ final class SlackWebhookHandlerTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->handler->handle($this->getRecord(Logger::CRITICAL));
+    }
+
+    /**
+     * @test
+     */
+    public function clientWillThrowExceptionWrappedIntoWhatFailureGroup()
+    {
+        $this->requestFactory->expects($this->once())
+            ->method('createRequest')
+            ->with('POST', 'www.dummy.com')
+            ->willReturn(new Request('POST', 'www.dummy.com'));
+
+        $this->client->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->callback(function (RequestInterface $value) {
+                $body = $value->getBody()->getContents();
+                $this->assertStringContainsString(':rotating_light:', $body);
+                $this->assertStringContainsString('test.CRITICAL: test', $body);
+                return true;
+            }))
+            ->willThrowException(new \Exception());
+
+        $handler = new WhatFailureGroupHandler([$this->handler]);
+        $handler->handle($this->getRecord(Logger::CRITICAL));
     }
 
     /**
