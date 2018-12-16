@@ -6,6 +6,10 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 
 ### Deprecated
 - Deprecated the custom clients that implement `Webthink\MonologSlack\Utility\ClientInterface`. Use a PSR-18 instead.
+- Passing `$username` as argument to `SlackWebhookHandler` is deprecated and it will be removed on 2.x. Instead initialize 
+your own own formatter and set it to the handler.  
+- Passing `$useCustomEmoji` as argument to `SlackWebhookHandler` is deprecated and it will be removed on 2.x. Instead initialize 
+your own own formatter and set it to the handler.
 
 ### Changes
 - Allow the constructor of `SlackWebhookHandler` to pass as level `string|int`. Before it was only `int`.
