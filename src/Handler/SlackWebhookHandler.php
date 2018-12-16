@@ -42,7 +42,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @param string $webhook The slack webhook URL
      * @param string|null $username Display name that will be used on the slack message
      * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
-     * @param int $level The minimum logging level at which this handler will be triggered
+     * @param int|string $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
      * @param \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface|null $client
      */
@@ -50,7 +50,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         string $webhook,
         string $username = null,
         string $useCustomEmoji = null,
-        int $level = Logger::ERROR,
+        $level = Logger::ERROR,
         bool $bubble = true,
         $client = null
     ) {
