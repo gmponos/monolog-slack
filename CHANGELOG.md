@@ -5,12 +5,17 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 ## [v1.2.0] - 2018-12-11
 
 ### Deprecated
-- Deprecated the custom clients that implement `Webthink\MonologSlack\Utility\ClientInterface`
+- Deprecated the custom clients that implement `Webthink\MonologSlack\Utility\ClientInterface`. Use a PSR-18 instead.
+- Passing `$username` as argument to `SlackWebhookHandler` is deprecated and it will be removed on 2.x. Instead initialize 
+your own own formatter and set it to the handler.  
+- Passing `$useCustomEmoji` as argument to `SlackWebhookHandler` is deprecated and it will be removed on 2.x. Instead initialize 
+your own own formatter and set it to the handler.
 
 ### Changes
-- Allow on the constructor to pass a PSR-18 HTTP client.
-- Use as default HTTP client an adapter of `php-http/guzzle6-adapter` as an HTTP Client instead of just guzzle.
-- Added in `SlackLineFormatter` a third parameter to allow passing a custom format. 
+- Allow the constructor of `SlackWebhookHandler` to pass as level `string|int`. Before it was only `int`.
+- Allow the constructor of `SlackWebhookHandler` to pass a PSR-18 HTTP client.
+- Use as default HTTP client an adapter of `php-http/guzzle6-adapter` instead of guzzle client.
+- Added in `SlackLineFormatter` a third parameter to allow passing a custom format of the text.
 - Removed from the default format of `SlackLineFormatter` the date since it is recorded on slack when the message is sent. 
 
 ## [v1.1.0] - 2018-11-12

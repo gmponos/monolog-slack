@@ -8,9 +8,9 @@ use Monolog\Handler\WhatFailureGroupHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackShortAttachmentFormatter;
 use Webthink\MonologSlack\Handler\SlackWebhookHandler;
 use Webthink\MonologSlack\Test\Unit\TestCase;
@@ -40,15 +40,7 @@ final class SlackWebhookHandlerTest extends TestCase
         parent::setUp();
         $this->client = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->requestFactory = $this->getMockBuilder(RequestFactoryInterface::class)->getMock();
-        $this->handler = new SlackWebhookHandler(
-            $this->client,
-            $this->requestFactory,
-            'www.dummy.com',
-            null,
-            'rotating_light',
-            Logger::ERROR,
-            true
-        );
+        $this->handler = new SlackWebhookHandler($this->client, $this->requestFactory, 'www.dummy.com');
     }
 
     /**
@@ -145,7 +137,7 @@ final class SlackWebhookHandlerTest extends TestCase
     public function setFormatterWillThrowException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected a slack formatter');
+        $this->expectExceptionMessage(sprintf('Expected an instance of %s', SlackFormatterInterface::class));
         $this->handler->setFormatter(new LineFormatter());
     }
 }

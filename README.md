@@ -7,8 +7,8 @@
 
 ## Description
 
-This is a package that can help you send logs through monolog to slack using webhooks.
-Monolog already has a handler for Slack but I am not in favor of it for these reasons:
+This is a package that can help you send logs through monolog to Slack using webhooks.
+Monolog already has a handler for Slack using Webhooks but I am not in favor of it for these reasons:
 
 **It has some bugs**
 
@@ -59,9 +59,9 @@ Now if you need to pass a custom slack formatter then you can to do the followin
 
 `$hanlder->setFormatter($yourFormatter);`
 
-Note that the formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-
-If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFormatter` by default.
+- **Note-1:** The formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
+- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
+- **Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
 
 ### SlackLineFormatter
 
@@ -71,7 +71,11 @@ If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFor
 
 ![slackshortattachementformatter](docs/slackshortattachementformatter.PNG)
 
-## Change log
+### SlackLongAttachmentFormatter
+
+![slacklongattachementformatter](docs/slacklongattachementformatter.PNG)
+
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 

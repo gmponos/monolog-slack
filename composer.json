@@ -17,7 +17,7 @@
         "psr/http-factory": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.4",
+        "phpunit/phpunit": "^7.5",
         "webthink/codesniffer": "^2",
         "guzzlehttp/psr7": "^1.5"
     },
@@ -33,7 +33,7 @@
         }
     },
     "scripts": {
-        "test": "php vendor/bin/phpunit --testsuite UnitTests",
+        "tests": "php vendor/bin/phpunit --testsuite UnitTests",
         "phpcbf": "php vendor/bin/phpcbf src tests",
         "phpcs": "php vendor/bin/phpcs src tests"
     },
