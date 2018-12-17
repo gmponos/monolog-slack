@@ -10,6 +10,7 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
+use Webthink\MonologSlack\Utility\ClientInterface;
 
 /**
  * Sends notifications through a Slack Webhook.
@@ -57,6 +58,14 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
 
         $this->webhook = $webhook;
+        if (!$username !== null) {
+            @trigger_error('Argument $username is deprecated and will be remove on 2.x version. Instead pass your custom formatter.', E_USER_DEPRECATED);
+        }
+
+        if (!$useCustomEmoji !== null) {
+            @trigger_error('Argument $useCustomEmoji is deprecated and will be remove on 2.x version. Instead pass your custom formatter.', E_USER_DEPRECATED);
+        }
+
         $this->username = $username;
         $this->useCustomEmoji = $useCustomEmoji;
 
@@ -66,6 +75,10 @@ class SlackWebhookHandler extends AbstractProcessingHandler
                 RequestOptions::CONNECT_TIMEOUT => 1,
                 RequestOptions::HTTP_ERRORS => false,
             ]);
+        }
+
+        if ($client instanceof ClientInterface) {
+            @trigger_error('Using the custom HTTP Client implementation is deprecated and will be removed on 2.x. Use a PSR-18 HTTP Client instead.', E_USER_DEPRECATED);
         }
 
         $this->client = $client;
