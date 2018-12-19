@@ -67,7 +67,6 @@ final class SlackWebhookHandlerTest extends TestCase
             ->method('sendRequest')
             ->with($this->callback(function (RequestInterface $value) {
                 $body = $value->getBody()->getContents();
-                $this->assertStringContainsString(':rotating_light:', $body);
                 $this->assertStringContainsString('test.CRITICAL: test', $body);
                 return true;
             }));
@@ -88,7 +87,6 @@ final class SlackWebhookHandlerTest extends TestCase
             ->method('sendRequest')
             ->with($this->callback(function (RequestInterface $value) {
                 $body = $value->getBody()->getContents();
-                $this->assertStringContainsString(':rotating_light:', $body);
                 $this->assertStringContainsString('test.CRITICAL: test', $body);
                 return true;
             }))
@@ -112,7 +110,6 @@ final class SlackWebhookHandlerTest extends TestCase
             ->method('sendRequest')
             ->with($this->callback(function (RequestInterface $value) {
                 $body = $value->getBody()->getContents();
-                $this->assertStringContainsString(':rotating_light:', $body);
                 $this->assertStringContainsString('test.CRITICAL: test', $body);
                 return true;
             }))

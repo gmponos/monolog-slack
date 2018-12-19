@@ -16,7 +16,7 @@ use Webthink\MonologSlack\Formatter\SlackLineFormatter;
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackWebhookHandler extends AbstractProcessingHandler
+final class SlackWebhookHandler extends AbstractProcessingHandler
 {
     /**
      * @var ClientInterface
@@ -27,16 +27,6 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      * @var string
      */
     private $webhook;
-
-    /**
-     * @var string|null
-     */
-    private $username;
-
-    /**
-     * @var string|null
-     */
-    private $useCustomEmoji;
 
     /**
      * @var RequestFactoryInterface
@@ -102,6 +92,6 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter(): FormatterInterface
     {
-        return new SlackLineFormatter($this->username, $this->useCustomEmoji);
+        return new SlackLineFormatter();
     }
 }
