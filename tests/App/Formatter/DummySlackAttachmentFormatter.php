@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webthink\MonologSlack\Test\App\Formatter;
 
 use Webthink\MonologSlack\Formatter\AbstractSlackAttachmentFormatter;

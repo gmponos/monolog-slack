@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webthink\MonologSlack\Test\Unit\Utility;
 
 use GuzzleHttp\ClientInterface;
