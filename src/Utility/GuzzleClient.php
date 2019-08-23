@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webthink\MonologSlack\Utility;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
@@ -31,8 +33,8 @@ class GuzzleClient implements ClientInterface
     /**
      * @param string $webhook
      * @param array $data
-     * @throws TransferException
      * @return void
+     * @throws TransferException
      */
     public function send(string $webhook, array $data): void
     {
