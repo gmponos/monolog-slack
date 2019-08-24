@@ -12,10 +12,16 @@ sudo: false
 ## Cache composer
 cache:
   directories:
-  - $HOME/.composer/cache
+    - $HOME/.composer/cache
+
+matrix:
+    include:
+        - php: 7.1
+          name: Lowest version of dependencies
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 
 before_script:
-  - travis_retry composer update --no-interaction --prefer-dist --no-suggest
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist --no-suggest
 
 script:
   - php vendor/bin/phpunit tests
