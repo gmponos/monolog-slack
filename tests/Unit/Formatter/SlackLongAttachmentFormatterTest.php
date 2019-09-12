@@ -135,7 +135,7 @@ final class SlackLongAttachmentFormatterTest extends TestCase
 
     public function testAddsLongAttachmentWithoutContextAndExtra()
     {
-        $formatter = new SlackLongAttachmentFormatter(null, true, false);
+        $formatter = new SlackLongAttachmentFormatter(null, 'ghost', false);
         $data = $formatter->format($this->getRecord(Logger::ERROR, 'test', ['test' => 1]));
 
         $attachment = $data['attachments'][0];
