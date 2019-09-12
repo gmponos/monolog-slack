@@ -12,7 +12,7 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "monolog/monolog": "dev-master",
+        "monolog/monolog": "^1.24",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0"
     },
