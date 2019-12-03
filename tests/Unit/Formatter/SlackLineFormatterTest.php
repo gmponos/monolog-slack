@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webthink\MonologSlack\Test\Unit\Formatter;
 
 use Monolog\Logger;
@@ -41,7 +43,7 @@ final class SlackLineFormatterTest extends TestCase
 
     public function testTextEqualsFormatterOutput()
     {
-        $formatter = new SlackLineFormatter(null, false);
+        $formatter = new SlackLineFormatter();
         $data = $formatter->format($this->getRecord(Logger::WARNING, 'Test message'));
 
         $this->assertArrayHasKey('text', $data);

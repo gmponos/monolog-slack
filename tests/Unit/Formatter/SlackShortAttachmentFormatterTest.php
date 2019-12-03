@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webthink\MonologSlack\Test\Unit\Formatter;
 
 use Monolog\Logger;
@@ -114,7 +116,7 @@ final class SlackShortAttachmentFormatterTest extends TestCase
     {
         $level = Logger::ERROR;
         $levelName = Logger::getLevelName($level);
-        $record = new SlackShortAttachmentFormatter(null, true, false);
+        $record = new SlackShortAttachmentFormatter(null, 'ghost', false);
         $data = $record->format($this->getRecord($level, 'test', ['test' => 1]));
 
         $attachment = $data['attachments'][0];
