@@ -22,7 +22,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     private $username;
 
     /**
-     * User icon e.g. 'ghost', 'http://example.com/user.png'
+     * User icon e.g. 'ghost'
      *
      * @var string|null
      */
