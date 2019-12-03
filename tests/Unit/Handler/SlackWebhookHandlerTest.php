@@ -40,8 +40,8 @@ final class SlackWebhookHandlerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->client = $this->getMockBuilder(ClientInterface::class)->getMock();
-        $this->requestFactory = $this->getMockBuilder(RequestFactoryInterface::class)->getMock();
+        $this->client = $this->createMock(ClientInterface::class);
+        $this->requestFactory = $this->createMock(RequestFactoryInterface::class);
         $this->handler = new SlackWebhookHandler($this->client, $this->requestFactory, 'www.dummy.com');
     }
 

@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
-        "monolog/monolog": "^1.24",
+        "monolog/monolog": "^1.24 || ^2.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0"
     },
