@@ -49,8 +49,8 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      */
     public function __construct(
         string $webhook,
-        string $username = null,
-        string $useCustomEmoji = null,
+        ?string $username = null,
+        ?string $useCustomEmoji = null,
         $level = Logger::ERROR,
         bool $bubble = true,
         $client = null

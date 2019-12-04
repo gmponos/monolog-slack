@@ -40,7 +40,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      * @param string|null $emoji
      * @param bool $includeContextAndExtra
      */
-    public function __construct(string $username = null, string $emoji = null, bool $includeContextAndExtra = true)
+    public function __construct(?string $username = null, ?string $emoji = null, bool $includeContextAndExtra = true)
     {
         parent::__construct();
         $this->username = $username;
