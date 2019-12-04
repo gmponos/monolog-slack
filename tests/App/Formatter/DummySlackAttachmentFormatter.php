@@ -8,6 +8,13 @@ use Webthink\MonologSlack\Formatter\AbstractSlackAttachmentFormatter;
 
 final class DummySlackAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->dateFormat = 'Y-m-d H:i:s';
+    }
+
+
     /**
      * @param array $record
      * @return array
