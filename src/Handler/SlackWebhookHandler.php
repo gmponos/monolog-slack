@@ -122,7 +122,7 @@ class SlackWebhookHandler extends AbstractProcessingHandler
     /**
      * @return SlackLineFormatter
      */
-    protected function getDefaultFormatter()
+    protected function getDefaultFormatter(): FormatterInterface
     {
         return new SlackLineFormatter($this->username, $this->useCustomEmoji);
     }

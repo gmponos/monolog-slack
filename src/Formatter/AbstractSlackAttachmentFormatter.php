@@ -22,7 +22,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     private $username;
 
     /**
-     * User icon e.g. 'ghost', 'http://example.com/user.png'
+     * User icon e.g. 'ghost'
      *
      * @var string|null
      */
@@ -111,16 +111,9 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     /**
      * @param Throwable $e
      * @return array
-     * @throws \InvalidArgumentException
      */
-    protected function normalizeException($e): array
+    protected function bcNormalizeException(Throwable $e): array
     {
-        if (!$e instanceof Throwable) {
-            throw new \InvalidArgumentException(
-                sprintf('Throwable expected, got %s / %s', gettype($e), get_class($e))
-            );
-        }
-
         return [
             'class' => get_class($e),
             'message' => $e->getMessage(),
@@ -182,7 +175,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         }
 
         if ($data instanceof Throwable) {
-            return $this->normalizeException($data);
+            return $this->bcNormalizeException($data);
         }
 
         $class = get_class($data);
