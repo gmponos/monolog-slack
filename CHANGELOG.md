@@ -6,6 +6,7 @@ All Notable changes to `monolog-slack` will be documented in this file see this 
 
 ### Changes
 - Added support for Monolog 2
+- Test against PHP 7.4
 
 ## [v1.2.0] - 2019-12-04
 
