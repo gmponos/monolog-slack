@@ -2,7 +2,7 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
-## [v1.3.0] - Next Release Date
+## [v1.3.0] - 2019-12-13
 
 ### Changes
 - Added support for Monolog 2
