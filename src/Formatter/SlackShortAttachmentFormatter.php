@@ -11,12 +11,8 @@ namespace Webthink\MonologSlack\Formatter;
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackShortAttachmentFormatter extends AbstractSlackAttachmentFormatter
+final class SlackShortAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
-    /**
-     * @param array $record
-     * @return array
-     */
     protected function formatFields(array $record): array
     {
         $value = $this->truncateStringIfNeeded($this->toJson($record, true));

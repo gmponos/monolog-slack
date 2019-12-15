@@ -2,6 +2,18 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [v2.0.0-RC1] - NEXT RELEASE DATE
+
+### Changes
+- [BC] Minimum required version is PHP 7.2
+- [BC] Minimum required version is monolog 2.0 
+- [BC] Remove custom Client implementation. Since PSR-18 exists I decided to use a standard client instead of a custom implementation.
+    - Everything under `Webthink\MonologSlack\Utility` has been removedWhatFailureGroupHandler
+    - SlackWebhookHandler only accepts a `Psr\Http\Client\ClientInterface`
+- [BC] The `SlackWebhookHandler` previously was silently failing in case the client was throwing an exception. This behaviour has changed.
+if you still want the handler to fail silently you will have to wrap it with the `WhatFailureGroupHandler` of monolog
+- [BC] All classes are made final.
+
 ## [v1.3.0] - 2019-12-13
 
 ### Changes

@@ -11,7 +11,7 @@ namespace Webthink\MonologSlack\Formatter;
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackLongAttachmentFormatter extends AbstractSlackAttachmentFormatter
+final class SlackLongAttachmentFormatter extends AbstractSlackAttachmentFormatter
 {
     /**
      * @param array $record

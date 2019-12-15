@@ -30,7 +30,7 @@ Because you are allowed to pass your own PSR-18 client you can have it configure
 - Current package gives you the ability to add a custom formatter to the `SlackwebhookHandler` in order to format Attachments.
 Monolog allows you to  pass a formatter to SlackHandlers but the formatter is applied only to simple messages of slack
 and they are not applied for Attachments.
-- I have created my custom formatters and I tend to like the formatting of Slack Records that I have created more than the one that monolog has.
+- I have created my own custom formatters. I like the formatting of Slack Records that I have more than the one that monolog has.
  
 ## Install
 
@@ -47,8 +47,8 @@ You can initialize a `SlackWebhookHandler` simple with the following lines:
 
 ```php
 $client = new PSR18Client(); // PSR18Client does not exist. Use your own implementation.
-$requestFactory = new PSR17RequestFactory // PSR18Client does not exist. Use your own implementation.
-$handler = new SlackWebhookHandler($client, $requestFactory, 'your_webhook_url');`
+$requestFactory = new PSR17RequestFactory(); // PSR18Client does not exist. Use your own implementation.
+$handler = new SlackWebhookHandler($client, $requestFactory, 'your_webhook_url');
 ```
 
 ## Formatters
@@ -60,8 +60,7 @@ Now if you need to pass a custom slack formatter then you can to do the followin
 `$hanlder->setFormatter($yourFormatter);`
 
 - **Note-1:** The formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
-- **Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
+- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFormatter` by default.
 
 ### SlackLineFormatter
 

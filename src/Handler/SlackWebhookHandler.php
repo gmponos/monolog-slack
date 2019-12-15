@@ -56,7 +56,7 @@ final class SlackWebhookHandler extends AbstractProcessingHandler
 
     /**
      * @param FormatterInterface $formatter
-     * @return self
+     * @return HandlerInterface
      * @throws \InvalidArgumentException
      */
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
@@ -68,10 +68,6 @@ final class SlackWebhookHandler extends AbstractProcessingHandler
         return parent::setFormatter($formatter);
     }
 
-    /**
-     * @param array $record
-     * @return void
-     */
     protected function write(array $record): void
     {
         $body = json_encode($record['formatted']);
