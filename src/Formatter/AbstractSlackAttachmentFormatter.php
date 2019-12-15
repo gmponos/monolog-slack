@@ -108,11 +108,6 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         return $data;
     }
 
-    /**
-     * @param Throwable $e
-     * @param int $depth
-     * @return array
-     */
     protected function normalizeException(Throwable $e, int $depth = 0): array
     {
         return [
@@ -146,10 +141,6 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         return $logLevels[$level];
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     protected function truncateStringIfNeeded(string $string): string
     {
         if (strlen($string) > 1950) {
@@ -176,7 +167,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         }
 
         if ($data instanceof Throwable) {
-            return $this->bcNormalizeException($data);
+            return $this->normalizeException($data);
         }
 
         $class = get_class($data);
