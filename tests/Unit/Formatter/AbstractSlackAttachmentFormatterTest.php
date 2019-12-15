@@ -61,7 +61,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
                             'baz' => [],
                             'res' => ['resource' => 'stream'],
                             'json' => ['Webthink\MonologSlack\Test\App\FooBar\TestJsonSerializableNorm' => ['foo' => 'bar']],
-                            'date_object' => $dateTime->format('Y-m-d\TH:i:sP'),
+                            'date_object' => $dateTime->format('Y-m-d H:i:s'),
                         ],
                     ],
                     'mrkdwn_in' => ['fields'],
