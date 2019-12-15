@@ -36,7 +36,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
                 'foo' => 'bar',
                 'baz' => 'qux',
                 'inf' => INF,
-                '-inf' => -INF,
+                '-inf' => - INF,
                 'nan' => acos(4),
             ],
         ]);
@@ -194,7 +194,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
             'depth' => [JSON_ERROR_DEPTH, 'Maximum stack depth exceeded'],
             'state' => [JSON_ERROR_STATE_MISMATCH, 'Underflow or the modes mismatch'],
             'ctrl' => [JSON_ERROR_CTRL_CHAR, 'Unexpected control character found'],
-            'default' => [-1, 'Unknown error'],
+            'default' => [ - 1, 'Unknown error'],
         ];
     }
 }

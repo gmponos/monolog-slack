@@ -38,7 +38,7 @@ class SlackLineFormatter extends NormalizerFormatter implements SlackFormatterIn
      * @param string|null $emoji
      * @param string|null $format
      */
-    public function __construct(string $username = null, string $emoji = null, string $format = null)
+    public function __construct(?string $username = null, ?string $emoji = null, ?string $format = null)
     {
         parent::__construct();
         $format = $format ?: '%channel%.%level_name%: %message% %context% %extra%';
