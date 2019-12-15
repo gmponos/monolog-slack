@@ -2,91 +2,61 @@
 
 namespace Webthink\MonologSlack\Handler;
 
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Webthink\MonologSlack\Formatter\SlackFormatterInterface;
 use Webthink\MonologSlack\Formatter\SlackLineFormatter;
-use Webthink\MonologSlack\Utility\ClientInterface;
 
 /**
  * Sends notifications through a Slack Webhook.
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackWebhookHandler extends AbstractProcessingHandler
+final class SlackWebhookHandler extends AbstractProcessingHandler
 {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
     /**
      * @var string
      */
     private $webhook;
 
     /**
-     * @var string|null
+     * @var RequestFactoryInterface
      */
-    private $username;
+    private $requestFactory;
 
     /**
-     * @var string|null
-     */
-    private $useCustomEmoji;
-
-    /**
-     * @var \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface
-     */
-    private $client;
-
-    /**
-     * @param string $webhook The slack webhook URL
-     * @param string|null $username Display name that will be used on the slack message
-     * @param string|null $useCustomEmoji The custom emoji you want to use. Set null if you do not wish to use a custom one.
-     * @param int|string $level The minimum logging level at which this handler will be triggered
+     * @param ClientInterface $client
+     * @param RequestFactoryInterface $requestFactory
+     * @param string $webhook Slack Webhook string
+     * @param string|int $level The minimum logging level at which this handler will be triggered
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param \Webthink\MonologSlack\Utility\ClientInterface|\Psr\Http\Client\ClientInterface|null $client
      */
     public function __construct(
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
         string $webhook,
-        ?string $username = null,
-        ?string $useCustomEmoji = null,
         $level = Logger::ERROR,
-        bool $bubble = true,
-        $client = null
+        bool $bubble = true
     ) {
         parent::__construct($level, $bubble);
 
-        $this->webhook = $webhook;
-        if (!$username !== null) {
-            @trigger_error('Argument $username is deprecated and will be remove on 2.x version. Instead pass your custom formatter.', E_USER_DEPRECATED);
-        }
-
-        if (!$useCustomEmoji !== null) {
-            @trigger_error('Argument $useCustomEmoji is deprecated and will be remove on 2.x version. Instead pass your custom formatter.', E_USER_DEPRECATED);
-        }
-
-        $this->username = $username;
-        $this->useCustomEmoji = $useCustomEmoji;
-
-        if ($client === null) {
-            $client = \Http\Adapter\Guzzle6\Client::createWithConfig([
-                RequestOptions::TIMEOUT => 1,
-                RequestOptions::CONNECT_TIMEOUT => 1,
-                RequestOptions::HTTP_ERRORS => false,
-            ]);
-        }
-
-        if ($client instanceof ClientInterface) {
-            @trigger_error('Using the custom HTTP Client implementation is deprecated and will be removed on 2.x. Use a PSR-18 HTTP Client instead.', E_USER_DEPRECATED);
-        }
-
         $this->client = $client;
+        $this->requestFactory = $requestFactory;
+        $this->webhook = $webhook;
     }
 
     /**
      * @param FormatterInterface $formatter
-     * @return self
+     * @return HandlerInterface
      * @throws \InvalidArgumentException
      */
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
@@ -98,25 +68,19 @@ class SlackWebhookHandler extends AbstractProcessingHandler
         return parent::setFormatter($formatter);
     }
 
-    /**
-     * @param array $record
-     * @return void
-     */
     protected function write(array $record): void
     {
-        if ($this->client instanceof \Psr\Http\Client\ClientInterface) {
-            $body = json_encode($record['formatted']);
-            if ($body === false) {
-                throw new \InvalidArgumentException('Could not format record to json');
-            };
+        $body = json_encode($record['formatted']);
+        if ($body === false) {
+            throw new \InvalidArgumentException('Could not format record to json');
+        };
 
-            $this->client->sendRequest(
-                new Request('POST', $this->webhook, ['Content-Type' => ['application/json']], $body)
-            );
-            return;
-        }
+        $request = $this->requestFactory->createRequest('POST', $this->webhook);
+        $request = $request->withHeader('Content-Type', ['application/json']);
+        $request->getBody()->write($body);
+        $request->getBody()->rewind();
 
-        $this->client->send($this->webhook, $record['formatted']);
+        $this->client->sendRequest($request);
     }
 
     /**
@@ -124,6 +88,6 @@ class SlackWebhookHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter(): FormatterInterface
     {
-        return new SlackLineFormatter($this->username, $this->useCustomEmoji);
+        return new SlackLineFormatter();
     }
 }

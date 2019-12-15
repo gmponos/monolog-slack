@@ -87,7 +87,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
      * @param int $depth
      * @return mixed
      */
-    protected function normalize($data, $depth = 0)
+    protected function normalize($data, int $depth = 0)
     {
         if ($data === null || is_scalar($data)) {
             return $this->normalizeScalar($data);
@@ -108,11 +108,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         return $data;
     }
 
-    /**
-     * @param Throwable $e
-     * @return array
-     */
-    protected function bcNormalizeException(Throwable $e): array
+    protected function normalizeException(Throwable $e, int $depth = 0): array
     {
         return [
             'class' => get_class($e),
@@ -145,10 +141,6 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         return $logLevels[$level];
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     protected function truncateStringIfNeeded(string $string): string
     {
         if (strlen($string) > 1950) {
@@ -175,7 +167,7 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
         }
 
         if ($data instanceof Throwable) {
-            return $this->bcNormalizeException($data);
+            return $this->normalizeException($data);
         }
 
         $class = get_class($data);

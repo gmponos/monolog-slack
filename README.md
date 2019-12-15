@@ -16,18 +16,21 @@ Monolog already has a handler for Slack using Webhooks but I am not in favor of 
 Current package is not able to send more than 2000 characters but it is able to send until 2000 characters 
 and be well formatted.
 
+**Flexibility**
+
+- The Handler on this package allows you to pass your own PSR-18 client that can be configured in your own way.
+
 **Performance**
 
-- Monolog has the `WhatFailureGroupHandler` but I consider it simpler not to wrap my handler around another handler 
-and have a simpler and faster logic [see](https://github.com/Seldaek/monolog/issues/920)
 - SlackWebhookHandler does not have timeouts and it executes retries when slack service is down [see](https://github.com/Seldaek/monolog/pull/846#issuecomment-373522968)
+Because you are allowed to pass your own PSR-18 client you can have it configured in your own way.
 
 **Formatting**
 
 - Current package gives you the ability to add a custom formatter to the `SlackwebhookHandler` in order to format Attachments.
 Monolog allows you to  pass a formatter to SlackHandlers but the formatter is applied only to simple messages of slack
 and they are not applied for Attachments.
-- I have created my custom formatters and I tend to like the formatting of Slack Records that I have created more than the one that monolog has.
+- I have created my own custom formatters. I like the formatting of Slack Records that I have more than the one that monolog has.
  
 ## Install
 
@@ -42,19 +45,22 @@ $ composer require webthink/monolog-slack
 ### Simple initialization
 You can initialize a `SlackWebhookHandler` simple with the following lines:
 
-`$handler = new SlackWebhookHandler('your_webhook_url');`
+```php
+$client = new PSR18Client(); // PSR18Client does not exist. Use your own implementation.
+$requestFactory = new PSR17RequestFactory(); // PSR18Client does not exist. Use your own implementation.
+$handler = new SlackWebhookHandler($client, $requestFactory, 'your_webhook_url');
+```
 
 ## Formatters
 
 ### Inject custom formatter
 
-Now if you need to pass a custom slack formatter then you need to do the following:
+Now if you need to pass a custom slack formatter then you can to do the following:
 
 `$hanlder->setFormatter($yourFormatter);`
 
 - **Note-1:** The formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
-- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler users the `SlackLineFormatter` by default.
-- **Note-3:** Some of the settings passed during constructing the Handler are overridden by the Formatter passed. 
+- **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFormatter` by default.
 
 ### SlackLineFormatter
 
@@ -67,19 +73,6 @@ Now if you need to pass a custom slack formatter then you need to do the followi
 ### SlackLongAttachmentFormatter
 
 ![slacklongattachementformatter](docs/slacklongattachementformatter.PNG)
-
-## HTTP Client.
-
-### Initialize with a PSR-18 HTTP Client.
-
-Inside `SlackWebhookHandler` you can inject your [PSR-18](https://www.php-fig.org/psr/psr-18) HTTP client.
-
-```php
-$handler = new SlackWebhookHandler('your_webhook_url', null, null, LogLevel::ERROR, true, $client);`
-```
-
-If no PSR-18 HTTP client is passed as argument then `SlackwebhookHandler` initializes a `\Http\Adapter\Guzzle6\Client` by default.
-The initialized client has Timeout and Connection-Timeout to 1 second.
 
 ## Changelog
 

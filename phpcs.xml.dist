@@ -7,6 +7,7 @@
     <config name="ignore_warnings_on_exit" value="1" />
 
     <rule ref="./vendor/webthink/codesniffer/src/Webthink/ruleset.xml">
+        <exclude name="PEAR.Commenting.FunctionComment" />
         <exclude name="Webthink.PHP.ObjectCalls.ArrayCall" />
         <exclude name="Webthink.WhiteSpace.OperatorSpacing" />
     </rule>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webthink\MonologSlack\Test\Unit\Formatter;
 
+use Monolog\DateTimeImmutable;
 use Monolog\Logger;
 use Webthink\MonologSlack\Test\App\FooBar\TestBarNorm;
 use Webthink\MonologSlack\Test\App\FooBar\TestFooNorm;
@@ -16,7 +17,7 @@ final class AbstractSlackAttachmentFormatterTest extends TestCase
     public function testFormat()
     {
         $formatter = new DummySlackAttachmentFormatter();
-        $dateTime = new \DateTime();
+        $dateTime = new DateTimeImmutable(false);
         $formatted = $formatter->format([
             'level' => Logger::ERROR,
             'level_name' => 'ERROR',

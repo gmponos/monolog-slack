@@ -12,7 +12,7 @@ use Monolog\Formatter\NormalizerFormatter;
  *
  * @author George Mponos <gmponos@gmail.com>
  */
-class SlackLineFormatter extends NormalizerFormatter implements SlackFormatterInterface
+final class SlackLineFormatter extends NormalizerFormatter implements SlackFormatterInterface
 {
     /**
      * Username to use as display for the webhook
