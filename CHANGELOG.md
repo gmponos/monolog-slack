@@ -2,7 +2,7 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
-## [v2.0.0-RC1] - NEXT RELEASE DATE
+## [v2.0.0-RC1] - 2019-12-25
 
 ### Changes
 - [BC] Minimum required version is PHP 7.2
