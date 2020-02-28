@@ -36,16 +36,27 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
     private $includeContextAndExtra;
 
     /**
+     * @var string|null
+     */
+    private $channel;
+
+    /**
      * @param string|null $username The username of the bot.
      * @param string|null $emoji
      * @param bool $includeContextAndExtra
+     * @param string|null $channel
      */
-    public function __construct(?string $username = null, ?string $emoji = null, bool $includeContextAndExtra = true)
-    {
+    public function __construct(
+        ?string $username = null,
+        ?string $emoji = null,
+        bool $includeContextAndExtra = true,
+        ?string $channel = null
+    ) {
         parent::__construct();
         $this->username = $username;
         $this->emoji = $emoji !== null ? trim($emoji, ':') : null;
         $this->includeContextAndExtra = $includeContextAndExtra;
+        $this->channel = $channel;
     }
 
     /**
@@ -62,6 +73,10 @@ abstract class AbstractSlackAttachmentFormatter extends NormalizerFormatter impl
 
         if ($this->emoji !== null) {
             $data['icon_emoji'] = sprintf(':%s:', $this->emoji);
+        }
+
+        if ($this->channel !== null) {
+            $data['channel'] = $this->channel;
         }
 
         $attachment = [
