@@ -49,4 +49,31 @@ final class SlackLineFormatterTest extends TestCase
         $this->assertArrayHasKey('text', $data);
         $this->assertStringStartsWith('test.WARNING: Test message', $data['text']);
     }
+
+    /**
+     * @dataProvider correctEmojiProvider
+     * @param string $emoji
+     * @param string $expectedEmoji
+     */
+    public function testCorrectlyParsesEmoji(string $emoji, string $expectedEmoji)
+    {
+        $formatter = new SlackLineFormatter(null, $emoji);
+        $data = $formatter->format($this->getRecord());
+
+        $this->assertArrayHasKey('icon_emoji', $data);
+        $this->assertSame($expectedEmoji, $data['icon_emoji']);
+    }
+
+    /**
+     * @return array
+     */
+    public function correctEmojiProvider()
+    {
+        return [
+            ['loudspeaker', ':loudspeaker:'],
+            [':information_source', ':information_source:'],
+            ['exclamation:', ':exclamation:'],
+            [':warning:', ':warning:'],
+        ];
+    }
 }

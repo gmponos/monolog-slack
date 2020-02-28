@@ -44,7 +44,7 @@ final class SlackLineFormatter extends NormalizerFormatter implements SlackForma
         $format = $format ?: '%channel%.%level_name%: %message% %context% %extra%';
         $this->lineFormatter = new LineFormatter($format, null, false, true);
         $this->username = $username;
-        $this->emoji = $emoji;
+        $this->emoji = $emoji !== null ? trim($emoji, ':') : null;
     }
 
     /**
