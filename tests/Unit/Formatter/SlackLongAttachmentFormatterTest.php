@@ -170,6 +170,23 @@ final class SlackLongAttachmentFormatterTest extends TestCase
         $this->assertStringEndsWith('... (truncated)```', $data['attachments'][0]['fields'][0]['value']);
     }
 
+    public function testAddsCustomChannel()
+    {
+        $formatter = new SlackLongAttachmentFormatter(null, null, true, 'my-slack-channel');
+        $data = $formatter->format($this->getRecord());
+
+        $this->assertArrayHasKey('channel', $data);
+        $this->assertSame('my-slack-channel', $data['channel']);
+    }
+
+    public function testChannelIsNotAddedByDefault()
+    {
+        $formatter = new SlackLongAttachmentFormatter();
+        $data = $formatter->format($this->getRecord());
+
+        $this->assertArrayNotHasKey('channel', $data);
+    }
+
     /**
      * @param string|null $username
      * @param string $userIcon

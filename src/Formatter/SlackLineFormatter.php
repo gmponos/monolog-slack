@@ -34,17 +34,28 @@ final class SlackLineFormatter extends NormalizerFormatter implements SlackForma
     private $lineFormatter;
 
     /**
+     * @var string|null
+     */
+    private $channel;
+
+    /**
      * @param string|null $username
      * @param string|null $emoji
      * @param string|null $format
+     * @param string|null $channel
      */
-    public function __construct(?string $username = null, ?string $emoji = null, ?string $format = null)
-    {
+    public function __construct(
+        ?string $username = null,
+        ?string $emoji = null,
+        ?string $format = null,
+        ?string $channel = null
+    ) {
         parent::__construct();
         $format = $format ?: '%channel%.%level_name%: %message% %context% %extra%';
         $this->lineFormatter = new LineFormatter($format, null, false, true);
         $this->username = $username;
         $this->emoji = $emoji !== null ? trim($emoji, ':') : null;
+        $this->channel = $channel;
     }
 
     /**
@@ -61,6 +72,10 @@ final class SlackLineFormatter extends NormalizerFormatter implements SlackForma
 
         if ($this->emoji !== null) {
             $data['icon_emoji'] = sprintf(':%s:', $this->emoji);
+        }
+
+        if ($this->channel !== null) {
+            $data['channel'] = $this->channel;
         }
 
         return $data;

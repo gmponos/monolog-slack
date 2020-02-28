@@ -76,4 +76,21 @@ final class SlackLineFormatterTest extends TestCase
             [':warning:', ':warning:'],
         ];
     }
+
+    public function testNoChannel()
+    {
+        $formatter = new SlackLineFormatter(null, null, null);
+        $data = $formatter->format($this->getRecord());
+
+        $this->assertArrayNotHasKey('channel', $data);
+    }
+
+    public function testHasChannel()
+    {
+        $formatter = new SlackLineFormatter(null, null, null, 'my-slack-channel');
+        $data = $formatter->format($this->getRecord());
+
+        $this->assertArrayHasKey('channel', $data);
+        $this->assertSame('my-slack-channel', $data['channel']);
+    }
 }
