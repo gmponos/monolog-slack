@@ -57,7 +57,7 @@ $handler = new SlackWebhookHandler($client, $requestFactory, 'your_webhook_url')
 
 Now if you need to pass a custom slack formatter then you can to do the following:
 
-`$hanlder->setFormatter($yourFormatter);`
+`$handler->setFormatter($yourFormatter);`
 
 - **Note-1:** The formatter passed inside the slack handler must be an instance of `SlackFormatterInterface`.
 - **Note-2:** If you do not pass a custom Formatter SlackWebhookHandler uses the `SlackLineFormatter` by default.
