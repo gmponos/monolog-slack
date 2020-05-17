@@ -2,6 +2,15 @@
 
 All Notable changes to `monolog-slack` will be documented in this file see this [url](http://keepachangelog.com/)
 
+## [v2.1.0] - 2020-05-16
+
+### Added
+- Ability to provide channel to formatters. [#16](https://github.com/gmponos/monolog-slack/pull/16)
+
+### Fix
+- Make the AbstractSlackAttachmentFormatter compatible with version 1 [#19](https://github.com/gmponos/monolog-slack/pull/19)
+- Trim colon from emoji string at SlackLineFormatter. [#15](https://github.com/gmponos/monolog-slack/pull/15)
+
 ## [v2.0.0] - 2020-01-03
 
 First stable release of v2.0. No changes from the previous release
