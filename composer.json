@@ -2,6 +2,7 @@
     "name": "webthink/monolog-slack",
     "homepage": "https://github.com/gmponos/monolog-slack",
     "description": "This package contains handlers/processors for sending logs of monolog to a slack channel.",
+    "keywords": ["slack", "handler", "monolog", "logs", "psr3"],
     "license": "MIT",
     "authors": [
         {
