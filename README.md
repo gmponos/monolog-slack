@@ -5,6 +5,12 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/2ba4ce7d-cdce-4424-ae6b-deae0107bace/mini.png)](https://insight.sensiolabs.com/projects/2ba4ce7d-cdce-4424-ae6b-deae0107bace)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/gmponos/monolog-slack/blob/master/LICENSE.md)
 
+**Notice** I have created another package that contains a collection of Monolog handlers that can send your logs using a PSR-18 clients. The package is [monolog-http](https://github.com/monolog-http/monolog-http)
+
+I will focus my efforts on the package above. If you are using the current package let me know WDYT.
+
+Give a :star: to monolog-http if you like it.
+
 ## Description
 
 This is a package that can help you send logs through monolog to Slack using webhooks.
