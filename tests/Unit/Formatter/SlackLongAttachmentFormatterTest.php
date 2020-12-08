@@ -18,7 +18,7 @@ final class SlackLongAttachmentFormatterTest extends TestCase
     /**
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->jsonFlags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
@@ -122,7 +122,7 @@ final class SlackLongAttachmentFormatterTest extends TestCase
 
         $this->assertArrayHasKey('attachments', $data);
         $this->assertArrayHasKey(0, $data['attachments']);
-        $this->assertInternalType('array', $data['attachments'][0]);
+        $this->assertIsArray($data['attachments'][0]);
     }
 
     public function testAddsFallbackAndTextToAttachment()
